@@ -96,7 +96,8 @@ class TeslaCAN:
   def create_eac_monitor(self, counter):
     values = {
       "APS_eacAllow": 1,
-      "APS_eacMonitorCounter": 0,
+      "APS_eacMonitorCounter": counter,
     }
     data = self.packer.make_can_msg("APS_eacMonitor", CANBUS.chassis, values)
     values["APS_eacMonitorChecksum"] = self.checksum(0x27d, data[:2])
+    return self.packer.make_can_msg("APS_eacMonitor", CANBUS.chassis, values)

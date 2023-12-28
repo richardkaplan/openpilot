@@ -57,6 +57,10 @@ class CarController:
         can_sends.append(self.tesla_can.create_action_request(CS.msg_stw_actn_req, pcm_cancel_cmd, CANBUS.chassis, counter))
         can_sends.append(self.tesla_can.create_action_request(CS.msg_stw_actn_req, pcm_cancel_cmd, CANBUS.autopilot_chassis, counter))
 
+    # Override the APS eacMonitor
+    if self.frame % 10 == 0:
+      can_sends.append(self.tesla_can.create_eac_monitor((self.frame // 10) % 16))
+
     # TODO: HUD control
 
     new_actuators = actuators.copy()
